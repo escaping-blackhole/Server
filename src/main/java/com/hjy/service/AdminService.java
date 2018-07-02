@@ -2,6 +2,8 @@ package com.hjy.service;
 
 import com.hjy.common.ServerResponse;
 import com.hjy.entity.Admin;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author hjy
@@ -9,6 +11,9 @@ import com.hjy.entity.Admin;
  **/
 public interface AdminService {
 
-	ServerResponse<Admin> login(String username, String password);
+	ServerResponse<Admin> login(String adminname,
+								String password);
+
+	ServerResponse register(Admin admin);
 
 }

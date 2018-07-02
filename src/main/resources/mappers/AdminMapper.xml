@@ -17,6 +17,7 @@
     from tb_admin
     where admin_id = #{adminId,jdbcType=BIGINT}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from tb_admin
     where admin_id = #{adminId,jdbcType=BIGINT}
@@ -70,4 +71,18 @@
       password = #{password,jdbcType=VARCHAR}
     where admin_id = #{adminId,jdbcType=BIGINT}
   </update>
+
+  <select id="checkAdminName" resultType="java.lang.Integer">
+    select count(1) from tb_admin
+    where adminname = #{adminname}
+  </select>
+  <select id="selectLogin" resultType="com.hjy.entity.Admin">
+    SELECT
+    <include refid="Base_Column_List" />
+    from tb_admin
+    where adminname = #{adminname}
+    and password = #{password}
+  </select>
+
+
 </mapper>

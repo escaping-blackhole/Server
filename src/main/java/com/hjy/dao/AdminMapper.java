@@ -1,6 +1,7 @@
 package com.hjy.dao;
 
 import com.hjy.entity.Admin;
+import org.apache.ibatis.annotations.Param;
 
 public interface AdminMapper {
     int deleteByPrimaryKey(Long adminId);
@@ -14,4 +15,8 @@ public interface AdminMapper {
     int updateByPrimaryKeySelective(Admin record);
 
     int updateByPrimaryKey(Admin record);
+
+	int checkAdminName(String adminname);
+
+    Admin selectLogin(@Param("adminname")String adminname, @Param("password")String md5Password);
 }

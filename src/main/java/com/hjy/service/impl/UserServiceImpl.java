@@ -73,12 +73,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public ServerResponse deleteUser(String userIds) {
+		logger.info(String.valueOf(new Date()));
 		List<String> userList = Splitter.on(",").splitToList(userIds);
 		if(CollectionUtils.isEmpty(userList)){
 			return ServerResponse.createByErrorCodeMessage(ResponseCode.BAD_REQUEST.getCode(),ResponseCode.BAD_REQUEST.getDesc());
 		}
+		logger.info(String.valueOf(new Date()));
 		userMapper.deleteByUserIds(userList);
-
+		logger.info(String.valueOf(new Date()));
 		return ServerResponse.createBySuccessMessage("删除成功");
 
 	}

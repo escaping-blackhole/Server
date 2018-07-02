@@ -8,7 +8,6 @@ import com.hjy.entity.Admin;
 import com.hjy.service.AdminService;
 import com.hjy.util.RedisOperator;
 import com.hjy.util.SHA256Util;
-import org.apache.catalina.connector.Request;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

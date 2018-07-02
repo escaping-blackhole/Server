@@ -16,7 +16,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    user_id, nickname, username, password, email, user_school, user_no, user_major, integral, 
+    user_id, nickname, username,  email, user_school, user_no, user_major, integral,
     gmt_create
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >

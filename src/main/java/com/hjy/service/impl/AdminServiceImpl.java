@@ -35,6 +35,11 @@ public class AdminServiceImpl implements AdminService {
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public ServerResponse login(String username, String password) {
 
+		// 校验关键信息是否为空
+		if (StringUtils.isBlank(username) || StringUtils.isBlank(password)) {
+			return ServerResponse.createByErrorMessage(ResponseCode.BAD_REQUEST.getDesc());
+		}
+
 		String SHA256password = SHA256Util.getSHA256StrJava(password + username);
 
 		Admin admin  = adminMapper.selectLogin(username,SHA256password);
@@ -66,6 +71,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 
+	@Override
 	public ServerResponse<String> checkValid(String str,String type){
 		if(StringUtils.isNotBlank(type)){
 			//开始校验
@@ -75,11 +81,11 @@ public class AdminServiceImpl implements AdminService {
 					return ServerResponse.createByErrorMessage("用户名已存在");
 				}
 			}
-		}else{
+		} else {
 			//参数错误
 			return ServerResponse.createByErrorMessage(ResponseCode.BAD_REQUEST.getDesc());
 		}
-		return ServerResponse.createBySuccessMessage(ResponseCode.SUCCESS.getDesc());
+		return ServerResponse.createBySuccessMessage("用户名不存在");
 	}
 
 }

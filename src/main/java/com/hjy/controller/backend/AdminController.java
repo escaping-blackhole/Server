@@ -1,6 +1,7 @@
 package com.hjy.controller.backend;
 
 import com.alibaba.fastjson.JSONObject;
+import com.hjy.common.Const;
 import com.hjy.common.ResponseCode;
 import com.hjy.common.ServerResponse;
 import com.hjy.entity.Admin;
@@ -44,11 +45,6 @@ public class AdminController {
 		String adminname = admin.getAdminname();
 		String password = admin.getPassword();
 
-		// 校验关键信息是否为空
-		if (StringUtils.isBlank(adminname) || StringUtils.isBlank(password)) {
-			return ServerResponse.createByErrorMessage(ResponseCode.BAD_REQUEST.getDesc());
-		}
-
 		ServerResponse<Admin> serverResponse = adminService.login(adminname,password);
 
 		if(serverResponse.isSuccess()){
@@ -61,8 +57,11 @@ public class AdminController {
 		}
 
 		// 设置请求头：解决关闭浏览器session就被干掉的问题
-		Cookie cookie = new Cookie("JSESSIONID", session.getId());
-		cookie.setPath( request.getContextPath()+"/");
+		Cookie cookie  = new Cookie("JSESSIONID", session.getId());
+		//cookie.setSecure(true);
+		cookie.setHttpOnly(true);
+		//cookie.setDomain(".luneice.com");
+		cookie.setPath(request.getContextPath() + "/");
 		cookie.setMaxAge(30*60);
 		response.addCookie(cookie);
 
@@ -82,5 +81,13 @@ public class AdminController {
 
 		return adminService.register(admin);
 	}
+
+	@PostMapping(value = "check")
+	public ServerResponse check(@RequestBody Admin admin) {
+		String adminname = admin.getAdminname();
+
+		return  adminService.checkValid(adminname, Const.ADMINNAME);
+	}
+
 
 }

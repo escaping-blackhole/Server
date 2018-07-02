@@ -16,4 +16,6 @@ public interface AdminService {
 
 	ServerResponse register(Admin admin);
 
+	ServerResponse<String> checkValid(String str,String type);
+
 }

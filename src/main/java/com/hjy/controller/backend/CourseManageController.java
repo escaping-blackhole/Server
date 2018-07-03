@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * @create 2018/06/24
  **/
 @RestController
-@RequestMapping("/management/course")
+@RequestMapping("/console/course/")
 public class CourseManageController {
 
 	private Logger logger = LoggerFactory.getLogger(CourseManageController.class);
@@ -22,7 +22,7 @@ public class CourseManageController {
 	@Autowired
 	private CourseService courseService;
 
-	@PostMapping(value = "list")
+	@GetMapping(value = "list")
 	public ServerResponse getList(
 								  @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
 								  @RequestParam(value = "pageSize",defaultValue = "10") int pageSize,
@@ -35,8 +35,8 @@ public class CourseManageController {
 	}
 
 
-	@PostMapping("update")
-	public ServerResponse updateCourse(String courseId , String courseName) {
+	@PutMapping("{courseId}")
+	public ServerResponse updateCourse(@PathVariable("courseIds")String courseId , String courseName) {
 
 		Course course = new Course();
 

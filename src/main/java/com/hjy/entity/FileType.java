@@ -1,6 +1,8 @@
 package com.hjy.entity;
 
-public class FileType {
+import java.io.Serializable;
+
+public class FileType implements Serializable {
     private Long fileTypeId;
 
     private String fileType;

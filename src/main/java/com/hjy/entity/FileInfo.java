@@ -1,6 +1,8 @@
 package com.hjy.entity;
 
-public class FileInfo {
+import java.io.Serializable;
+
+public class FileInfo implements Serializable {
     private String fileHash;
 
     private String fileName;

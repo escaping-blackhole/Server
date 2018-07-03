@@ -59,8 +59,12 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public ServerResponse updateCourse(Course course) {
-		logger.info(course.getCourseId());
-		logger.info(course.getCourseName());
+
+		String courseName = course.getCourseName();
+
+		if (StringUtils.isBlank(courseName)) {
+			return ServerResponse.createByErrorMessage("输入参数有误！");
+		}
 
 		int i = courseMapper.updateByPrimaryKeySelective(course);
 		if (i > 0) {

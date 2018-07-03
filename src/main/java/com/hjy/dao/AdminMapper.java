@@ -1,8 +1,10 @@
 package com.hjy.dao;
 
 import com.hjy.entity.Admin;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface AdminMapper {
     int deleteByPrimaryKey(Long adminId);
 

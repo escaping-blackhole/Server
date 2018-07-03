@@ -16,10 +16,12 @@
     from tb_major
     where major_id = #{majorId,jdbcType=VARCHAR}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from tb_major
     where major_id = #{majorId,jdbcType=VARCHAR}
   </delete>
+
   <insert id="insert" parameterType="com.hjy.entity.Major" >
     insert into tb_major (major_id, major_name)
     values (#{majorId,jdbcType=VARCHAR}, #{majorName,jdbcType=VARCHAR})
@@ -57,4 +59,20 @@
     set major_name = #{majorName,jdbcType=VARCHAR}
     where major_id = #{majorId,jdbcType=VARCHAR}
   </update>
+
+
+  <delete id="deleteByMajorIds">
+    delete from tb_major
+    where major_id in
+    <foreach collection="majorIdList" item="item" index="index" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+
+  </delete>
+
+  <select id="getList" resultType="com.hjy.entity.Major">
+    select
+    <include refid="Base_Column_List" />
+    from tb_major
+  </select>
 </mapper>

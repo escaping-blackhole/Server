@@ -36,24 +36,15 @@ public class CourseManageController {
 
 
 	@PutMapping("{courseId}")
-	public ServerResponse updateCourse(@PathVariable("courseIds")String courseId , String courseName) {
-
-		Course course = new Course();
-
-		logger.info("s" + courseName);
-
-		if (StringUtils.isBlank(courseName)) {
-			return ServerResponse.createByErrorMessage("输入参数有误！");
-		}
+	public ServerResponse updateCourse(@PathVariable("courseId")String courseId,
+									   @RequestBody Course course) {
 
 		course.setCourseId(courseId);
-		course.setCourseName(courseName);
-
 		return courseService.updateCourse(course);
 	}
 
 	@PostMapping
-	public ServerResponse register(Course course) {
+	public ServerResponse register(@RequestBody Course course) {
 		return  courseService.insertCourse(course);
 	}
 

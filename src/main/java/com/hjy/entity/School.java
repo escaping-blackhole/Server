@@ -1,6 +1,8 @@
 package com.hjy.entity;
 
-public class School {
+import java.io.Serializable;
+
+public class School implements Serializable{
     private String schoolId;
 
     private String schoolName;

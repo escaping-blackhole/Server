@@ -38,7 +38,8 @@ public class MajorManageController {
 	}
 
 	@PutMapping("{id}")
-	public ServerResponse updateMajor(@PathVariable("id") String id , Major major) {
+	public ServerResponse updateMajor(@PathVariable("id") String id ,
+									  @RequestBody Major major) {
 		if (major == null) {
 			return ServerResponse.createByErrorMessage("输入参数有误！");
 		}

@@ -1,6 +1,8 @@
 package com.hjy.entity;
 
-public class Major {
+import java.io.Serializable;
+
+public class Major implements Serializable {
     private String majorId;
 
     private String majorName;

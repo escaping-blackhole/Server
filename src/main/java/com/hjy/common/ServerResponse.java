@@ -12,14 +12,14 @@ public class ServerResponse<T> implements Serializable {
 
 
     private int status;
-    private String msg;
+    private String message;
     private T data;
 
     @Override
     public String toString() {
         return "ServerResponse{" +
                 "status=" + status +
-                ", msg='" + msg + '\'' +
+                ", msg='" + message + '\'' +
                 ", data=" + data +
                 '}';
     }
@@ -34,13 +34,13 @@ public class ServerResponse<T> implements Serializable {
 
     private ServerResponse(int status,String msg,T data){
         this.status = status;
-        this.msg = msg;
+        this.message = msg;
         this.data = data;
     }
 
     private ServerResponse(int status,String msg){
         this.status = status;
-        this.msg = msg;
+        this.message = msg;
     }
 
     @JsonIgnore
@@ -56,7 +56,7 @@ public class ServerResponse<T> implements Serializable {
         return data;
     }
     public String getMsg(){
-        return msg;
+        return message;
     }
 
 

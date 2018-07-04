@@ -21,7 +21,7 @@ public interface CourseMapper {
 
 	void deleteByCourseIds(List<String> courseIdList);
 
-    List<CourseVo> getListByMajorName(@Param("majorName")String majorName);
+    List<CourseVo> getListByMajorName(@Param("majorName")String majorName,@Param("courseName")String courseName);
 
     List<Course> getList();
 

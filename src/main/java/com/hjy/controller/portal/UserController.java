@@ -1,11 +1,13 @@
 package com.hjy.controller.portal;
 
 import com.hjy.common.Const;
+import com.hjy.common.ResponseCode;
 import com.hjy.common.ServerResponse;
 import com.hjy.entity.User;
 import com.hjy.service.UserService;
 import com.hjy.util.RedisOperator;
 import com.hjy.util.SHA256Util;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,9 +122,16 @@ public class UserController {
 		//return userService.updateUser(user);
 	}
 
+	@PostMapping("check")
+	public ServerResponse checkUsername(@RequestBody User user) {
+		if (StringUtils.isNotBlank(user.getUsername())) {
+			return userService.checkUsername(user.getUsername());
+		} else if (StringUtils.isNotBlank(user.getNickname())) {
+			return userService.checkNickname(user.getNickname());
+		}
+		return ServerResponse.createByErrorMessage(ResponseCode.BAD_REQUEST.getDesc());
 
-
-
+	}
 
 
 }

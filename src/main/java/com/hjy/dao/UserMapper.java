@@ -25,4 +25,6 @@ public interface UserMapper {
     int checkUsername(String username);
 
     void deleteByUserIds(@Param("userIdList")List<String> userList);
+
+	int checkNickname(String nickname);
 }

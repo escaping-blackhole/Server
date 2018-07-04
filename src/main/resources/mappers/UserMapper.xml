@@ -172,8 +172,12 @@
     select count(1) from tb_user_info
     where username = #{username}
   </select>
+    <select id="checkNickname" resultType="java.lang.Integer">
+      select count(1) from tb_user_info
+      where nickname = #{nickname}
+    </select>
 
-  <delete id="deleteByUserIds">
+    <delete id="deleteByUserIds">
     delete from tb_user_info
     where user_id in
     <foreach collection="userIdList" item="item" index="index" open="(" separator="," close=")">

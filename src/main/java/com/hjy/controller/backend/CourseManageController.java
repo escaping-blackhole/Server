@@ -26,8 +26,9 @@ public class CourseManageController {
 	public ServerResponse getList(
 								  @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
 								  @RequestParam(value = "pageSize",defaultValue = "10") int pageSize,
-								  @RequestParam(value = "majorName",defaultValue = "") String majorName){
-		return courseService.getCourseList(pageNum,pageSize,majorName);
+								  @RequestParam(value = "majorName",defaultValue = "") String majorName,
+								  @RequestParam(value = "courseName",defaultValue = "") String courseName){
+		return courseService.getCourseList(pageNum,pageSize,majorName,courseName);
 	}
 	@DeleteMapping("/{courseIds}")
 	public ServerResponse deleteCourseByCourseId(@PathVariable("courseIds")String courseIds) {

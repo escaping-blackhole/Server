@@ -16,7 +16,7 @@ public interface CourseService {
 
 	ServerResponse updateCourse(Course course);
 
-	ServerResponse<PageInfo> getCourseList(int pageNum, int pageSize,String majorName);
+	ServerResponse<PageInfo> getCourseList(int pageNum, int pageSize,String majorName,String courseName);
 
 
 }

@@ -39,10 +39,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public ServerResponse register(User user) {
-		/*ServerResponse validResponse = this.checkValid(user.getUsername(), Const.USERNAME);
+		ServerResponse validResponse = this.checkValid(user.getUsername(), Const.USERNAME);
 		if(!validResponse.isSuccess()){
 			return validResponse;
-		}*/
+		}
 
 		user.setGmtCreate(new Date());
 
@@ -64,6 +64,11 @@ public class UserServiceImpl implements UserService {
 				int resultCount = userMapper.checkUsername(str);
 				if(resultCount > 0 ){
 					return ServerResponse.createByErrorMessage("用户名已存在");
+				}
+			} else if (Const.NICKNAME.equals(type)) {
+				int resultCount = userMapper.checkNickname(str);
+				if(resultCount > 0 ){
+					return ServerResponse.createByErrorMessage("花名已存在");
 				}
 			}
 		}else{
@@ -152,4 +157,16 @@ public class UserServiceImpl implements UserService {
 		PageInfo<User> pageInfo = new PageInfo<User>(userList);
 		return ServerResponse.createBySuccess(pageInfo);
 	}
+
+	@Override
+	public ServerResponse checkUsername(String username) {
+		return this.checkValid(username, Const.USERNAME);
+	}
+
+	@Override
+	public ServerResponse checkNickname(String nickname) {
+		return this.checkValid(nickname, Const.NICKNAME);
+	}
+
+
 }

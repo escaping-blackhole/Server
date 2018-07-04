@@ -24,4 +24,8 @@ public interface UserService {
 
 
 	ServerResponse<PageInfo> getUserList(int pageNum, int pageSize);
+
+	ServerResponse checkUsername(String username);
+
+	ServerResponse checkNickname(String nickname);
 }

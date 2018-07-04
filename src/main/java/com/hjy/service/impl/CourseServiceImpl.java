@@ -78,16 +78,16 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public ServerResponse<PageInfo> getCourseList(int pageNum, int pageSize,String majorName) {
+	public ServerResponse<PageInfo> getCourseList(int pageNum, int pageSize,String majorName,String courseName) {
 		//使用分页插件,核心代码就这一行
 		PageHelper.startPage(pageNum,pageSize);
 		// 获取
 		List<CourseVo> courseList;
-		if(StringUtils.isNoneBlank(majorName)) {
-			courseList = courseMapper.getListByMajorName(majorName);
-		} else {
-			courseList = courseMapper.getListByMajorName(majorName);
+		if(StringUtils.isNotBlank(courseName)){
+			courseName = new StringBuilder().append("%").append(courseName).append("%").toString();
 		}
+		courseList = courseMapper.getListByMajorName(majorName,courseName);
+
 		PageInfo<CourseVo> pageInfo = new PageInfo<>(courseList);
 		return ServerResponse.createBySuccess(pageInfo);
 	}

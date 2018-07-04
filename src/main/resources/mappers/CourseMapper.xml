@@ -77,10 +77,14 @@
     FROM tb_major_course as mc
       INNER JOIN tb_course as c
         ON mc.course_id = c.course_id
+        <if test="courseName != null and courseName !=''">
+          AND c.course_name LIKE #{courseName,jdbcType=VARCHAR}
+        </if>
       INNER JOIN tb_major m
         ON m.major_id = mc.major_id
         <if test="majorName != null and majorName !=''">
           AND m.major_name = #{majorName,jdbcType=VARCHAR}
         </if>
+
   </select>
 </mapper>

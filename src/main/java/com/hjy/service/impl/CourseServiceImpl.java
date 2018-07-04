@@ -7,7 +7,9 @@ import com.hjy.common.ResponseCode;
 import com.hjy.common.ServerResponse;
 import com.hjy.dao.CourseMapper;
 import com.hjy.entity.Course;
+import com.hjy.entity.Major;
 import com.hjy.service.CourseService;
+import com.hjy.vo.CourseVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,13 +82,13 @@ public class CourseServiceImpl implements CourseService {
 		//使用分页插件,核心代码就这一行
 		PageHelper.startPage(pageNum,pageSize);
 		// 获取
-		List<Course> courseList;
+		List<CourseVo> courseList;
 		if(StringUtils.isNoneBlank(majorName)) {
 			courseList = courseMapper.getListByMajorName(majorName);
 		} else {
-			courseList = courseMapper.getList();
+			courseList = courseMapper.getListByMajorName(majorName);
 		}
-		PageInfo<Course> pageInfo = new PageInfo<>(courseList);
+		PageInfo<CourseVo> pageInfo = new PageInfo<>(courseList);
 		return ServerResponse.createBySuccess(pageInfo);
 	}
 }

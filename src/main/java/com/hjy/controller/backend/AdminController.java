@@ -19,6 +19,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 /**
  * @author hjy
@@ -47,24 +48,25 @@ public class AdminController {
 		ServerResponse<Admin> serverResponse = adminService.login(adminname,password);
 
 		if(serverResponse.isSuccess()){
-			// 登录成功  redis保存sessionId加密后的信息
-			String key = SHA256Util.getSHA256StrJava(session.getId() + adminname);
-			redis.set(key, JSONObject.toJSONString(serverResponse.getData().getAdminId()));
+			String token = SHA256Util.getSHA256StrJava(adminname + new Date());
+
+			// 登录成功  redis保存加密后的信息
+			redis.set(token, JSONObject.toJSONString(serverResponse.getData().getAdminId()));
+
+			// 设置请求头：解决关闭浏览器session就被干掉的问题
+			Cookie cookie  = new Cookie("JSESSIONID", token);
+			cookie.setHttpOnly(true);
+			cookie.setPath(request.getContextPath() + "/");
+			cookie.setMaxAge(30*60);
+			response.addCookie(cookie);
+
+			return serverResponse;
 		} else {
 			// 登录失败
 			return serverResponse;
 		}
 
-		// 设置请求头：解决关闭浏览器session就被干掉的问题
-		Cookie cookie  = new Cookie("JSESSIONID", session.getId());
-		//cookie.setSecure(true);
-		cookie.setHttpOnly(true);
-		//cookie.setDomain(".luneice.com");
-		cookie.setPath(request.getContextPath() + "/");
-		cookie.setMaxAge(30*60);
-		response.addCookie(cookie);
 
-		return serverResponse;
 	}
 
 

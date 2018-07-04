@@ -72,13 +72,15 @@
         </foreach>
   </delete>
 
-  <select id="getListByMajorName" resultType="com.hjy.entity.Course">
+  <select id="getListByMajorName"  resultType="com.hjy.vo.CourseVo">
     SELECT c.course_id, c.course_name, m.major_name
     FROM tb_major_course as mc
       INNER JOIN tb_course as c
         ON mc.course_id = c.course_id
       INNER JOIN tb_major m
         ON m.major_id = mc.major_id
+        <if test="majorName != null and majorName !=''">
           AND m.major_name = #{majorName,jdbcType=VARCHAR}
+        </if>
   </select>
 </mapper>

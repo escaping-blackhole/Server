@@ -97,7 +97,6 @@ public class DataSourceConfiguration {
 		datasource.setTestOnReturn(testOnReturn);
 		datasource.setPoolPreparedStatements(poolPreparedStatements);
 		datasource.setMaxPoolPreparedStatementPerConnectionSize(maxPoolPreparedStatementPerConnectionSize);
-
 		try {
 			datasource.setFilters(filters);
 		} catch (SQLException e) {

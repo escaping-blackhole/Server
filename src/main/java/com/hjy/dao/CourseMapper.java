@@ -1,6 +1,8 @@
 package com.hjy.dao;
 
 import com.hjy.entity.Course;
+import com.hjy.vo.CourseVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,7 +21,7 @@ public interface CourseMapper {
 
 	void deleteByCourseIds(List<String> courseIdList);
 
-    List<Course> getListByMajorName(String majorName);
+    List<CourseVo> getListByMajorName(@Param("majorName")String majorName);
 
     List<Course> getList();
 

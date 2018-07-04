@@ -76,12 +76,12 @@ public class UserManageController {
 	 * @return
 	 */
 	@PutMapping("{id}")
-	public ServerResponse updateUser(@PathVariable("id") Long id , @RequestBody User user) {
+	public ServerResponse updateUser(@PathVariable("id") Long id , @RequestBody(required = false) User user) {
+
 		if (user == null) {
 			return ServerResponse.createByErrorMessage("输入参数有误！");
 		}
 		user.setUserId(id);
-		logger.info("User:" + user);
 		//return ServerResponse.createByErrorMessage("输入参数有误！");
 		return userService.updateUser(user);
 	}

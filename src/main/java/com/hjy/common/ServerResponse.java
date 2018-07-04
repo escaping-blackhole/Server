@@ -19,7 +19,7 @@ public class ServerResponse<T> implements Serializable {
     public String toString() {
         return "ServerResponse{" +
                 "status=" + status +
-                ", msg='" + message + '\'' +
+                ", message='" + message + '\'' +
                 ", data=" + data +
                 '}';
     }

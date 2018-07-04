@@ -34,7 +34,7 @@ public class FileInfoServiceImpl implements FileInfoService {
 	public ServerResponse insertFileInfo(FileInfo fileInfo, Long userId) {
 		Date date = new Date();
 		try {
-			fileInfoMapper.insertFile(userId, fileInfo, date);
+			//fileInfoMapper.insertFile(userId, fileInfo, date);
 		} catch (Exception e) {
 			//回滚
 			return ServerResponse.createByErrorMessage("上传失败");

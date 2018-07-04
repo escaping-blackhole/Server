@@ -10,6 +10,7 @@ import com.hjy.dao.UserMapper;
 import com.hjy.entity.User;
 import com.hjy.service.UserService;
 import com.hjy.util.MD5Util;
+import com.hjy.util.SHA256Util;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,14 +39,17 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public ServerResponse register(User user) {
-		user.setGmtCreate(new Date());
-
-		ServerResponse validResponse = this.checkValid(user.getUsername(), Const.USERNAME);
+		/*ServerResponse validResponse = this.checkValid(user.getUsername(), Const.USERNAME);
 		if(!validResponse.isSuccess()){
 			return validResponse;
-		}
-		//MD5加密
-		user.setPassword(MD5Util.MD5EncodeUtf8(user.getPassword()));
+		}*/
+
+		user.setGmtCreate(new Date());
+
+		//SHA256加密
+		String password = SHA256Util.getSHA256StrJava(user.getPassword() + user.getUsername());
+		user.setPassword(password);
+
 		int resultCount = userMapper.insert(user);
 		if(resultCount == 0){
 			return ServerResponse.createByErrorMessage("注册失败");
@@ -73,14 +77,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public ServerResponse deleteUser(String userIds) {
-		logger.info(String.valueOf(new Date()));
 		List<String> userList = Splitter.on(",").splitToList(userIds);
 		if(CollectionUtils.isEmpty(userList)){
 			return ServerResponse.createByErrorCodeMessage(ResponseCode.BAD_REQUEST.getCode(),ResponseCode.BAD_REQUEST.getDesc());
 		}
-		logger.info(String.valueOf(new Date()));
 		userMapper.deleteByUserIds(userList);
-		logger.info(String.valueOf(new Date()));
 		return ServerResponse.createBySuccessMessage("删除成功");
 
 	}
@@ -117,8 +118,8 @@ public class UserServiceImpl implements UserService {
 			return ServerResponse.createByErrorMessage("用户名不存在");
 		}
 
-		String md5Password = MD5Util.MD5EncodeUtf8(password);
-		User user  = userMapper.selectLogin(username,md5Password);
+		password = SHA256Util.getSHA256StrJava(password+username);
+		User user  = userMapper.selectLogin(username,password);
 		if(user == null){
 			return ServerResponse.createByErrorMessage("密码错误");
 		}

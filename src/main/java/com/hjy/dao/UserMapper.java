@@ -20,7 +20,7 @@ public interface UserMapper {
 
 	List<User> getList();
 
-    User selectLogin(String username, String md5Password);
+    User selectLogin(@Param("username") String username, @Param("password")String password);
 
     int checkUsername(String username);
 

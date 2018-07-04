@@ -27,6 +27,7 @@ public class UserMapperTest {
 
 	@Test
 	public void deleteByPrimaryKey() throws Exception {
+
 	}
 
 	@Test

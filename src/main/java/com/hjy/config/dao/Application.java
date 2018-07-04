@@ -13,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @MapperScan("com.hjy.config.dao")
 public class Application extends WebMvcConfigurerAdapter {
 	public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+
+		SpringApplication.run(Application.class, args);
     }  
 } 

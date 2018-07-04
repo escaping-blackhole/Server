@@ -17,5 +17,4 @@ public interface FileInfoMapper {
 
     int updateByPrimaryKey(FileInfo record);
 
-	void insertFile(Long userId, FileInfo fileInfo, Date date);
 }

@@ -12,6 +12,7 @@ public class Const {
     public static final String USERNAME = "username";
     public static final String NICKNAME = "nickname";
     public static final String ADMINNAME = "adminname";
+    public static final String JSESSIONID = "JSESSIONID";
 
-
+    public static final Integer JUDGEROLE = 1000;
 }

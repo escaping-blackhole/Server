@@ -1,9 +1,14 @@
 package com.hjy.controller.backend;
 
+import com.hjy.common.Const;
+import com.hjy.common.ResponseCode;
 import com.hjy.common.ServerResponse;
 import com.hjy.controller.portal.UserController;
 import com.hjy.entity.User;
 import com.hjy.service.UserService;
+import com.hjy.util.CookieUtil;
+import com.hjy.util.RedisOperator;
+import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.annotate.JsonRawValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -24,27 +30,25 @@ public class UserManageController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private RedisOperator redis;
+
 	private Logger logger = LoggerFactory.getLogger(UserManageController.class);
 
 
 	@GetMapping(value = "list")
-	public ServerResponse getList(HttpSession session,
+	public ServerResponse getList(HttpServletRequest request,
 								  @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
 								  @RequestParam(value = "pageSize",defaultValue = "10") int pageSize){
-/*
-		User user = (User)session.getAttribute(Const.CURRENT_USER);
-		logger.info("user:" + user);
 
-		if(user == null){
+		//Cookie验证
+		String key = CookieUtil.getUid(request, Const.JSESSIONID);
+		String value =redis.get(key);
+		if (StringUtils.isBlank(value)) {
 			return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
+
 		}
-		if(userService.checkAdminRole(user).isSuccess()){
-			//填充业务
-			return userService.getUserList(pageNum,pageSize);
-		}else {
-			return ServerResponse.createByErrorMessage("无权限操作");
-		}*/
-		//logger.info(request);
+
 		return userService.getUserList(pageNum,pageSize);
 	}
 

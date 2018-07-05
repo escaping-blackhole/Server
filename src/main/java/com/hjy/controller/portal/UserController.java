@@ -69,6 +69,7 @@ public class UserController {
 			cookie.setHttpOnly(true);
 			cookie.setPath(request.getContextPath() + "/");
 			cookie.setMaxAge(30*60);
+
 			response.addCookie(cookie);
 
 			return serverResponse;

@@ -6,6 +6,7 @@ import com.hjy.common.ResponseCode;
 import com.hjy.common.ServerResponse;
 import com.hjy.entity.Admin;
 import com.hjy.service.AdminService;
+import com.hjy.util.CookieUtil;
 import com.hjy.util.RedisOperator;
 import com.hjy.util.SHA256Util;
 import org.apache.commons.lang3.StringUtils;
@@ -39,7 +40,6 @@ public class AdminController {
 
 	@PostMapping(value = "login")
 	public ServerResponse<Admin> login(@RequestBody Admin admin,
-									   HttpSession session,
 									   HttpServletRequest request,
 									   HttpServletResponse response) {
 		String adminname = admin.getAdminname();
@@ -54,7 +54,7 @@ public class AdminController {
 			redis.set(token, JSONObject.toJSONString(serverResponse.getData().getAdminId()));
 
 			// 设置请求头：解决关闭浏览器session就被干掉的问题
-			Cookie cookie  = new Cookie("JSESSIONID", token);
+			Cookie cookie  = new Cookie(Const.JSESSIONID, token);
 			cookie.setHttpOnly(true);
 			cookie.setPath(request.getContextPath() + "/");
 			cookie.setMaxAge(30*60);
@@ -69,6 +69,18 @@ public class AdminController {
 
 	}
 
+
+	@PostMapping( value = "logout")
+	public ServerResponse logout(HttpServletRequest  request) {
+		//Cookie验证
+		String key = CookieUtil.getUid(request, Const.JSESSIONID);
+		String value =redis.get(key);
+		if (StringUtils.isBlank(value)) {
+			return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录,请登录管理员");
+		}
+		redis.del(key);
+		return ServerResponse.createBySuccessMessage("注销成功");
+	}
 
 	@PostMapping(value = "register")
 	public ServerResponse register(@RequestBody Admin admin) {

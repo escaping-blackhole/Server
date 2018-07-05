@@ -8,24 +8,27 @@
       <arg column="file_url" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
+
   <sql id="Base_Column_List" >
     file_hash, file_name, file_url
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from tb_file_info
     where file_hash = #{fileHash,jdbcType=VARCHAR}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from tb_file_info
     where file_hash = #{fileHash,jdbcType=VARCHAR}
   </delete>
+
   <insert id="insert" parameterType="com.hjy.entity.FileInfo" >
     insert into tb_file_info (file_hash, file_name, file_url
-      )
+    )
     values (#{fileHash,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, #{fileUrl,jdbcType=VARCHAR}
-      )
+    )
   </insert>
   <insert id="insertSelective" parameterType="com.hjy.entity.FileInfo" >
     insert into tb_file_info
@@ -67,7 +70,38 @@
   <update id="updateByPrimaryKey" parameterType="com.hjy.entity.FileInfo" >
     update tb_file_info
     set file_name = #{fileName,jdbcType=VARCHAR},
-      file_url = #{fileUrl,jdbcType=VARCHAR}
+    file_url = #{fileUrl,jdbcType=VARCHAR}
     where file_hash = #{fileHash,jdbcType=VARCHAR}
   </update>
+
+  <select id="getList" resultType="com.hjy.entity.FileInfo">
+    select
+    <include refid="Base_Column_List" />
+    from tb_file_info
+  </select>
+
+  <select id="getFile" resultType="com.hjy.vo.FileVo">
+    SELECT DISTINCT userinfo.user_id,userinfo.username,file.file_name,file.file_hash,
+    ucf.gmt_create,download_count,like_count,collect_count,uof.status
+    from tb_user_info AS  userinfo
+    INNER  JOIN  tb_file_info AS  file
+    INNER  JOIN  tb_user_create_file AS  ucf
+    on ucf.user_id = userinfo.user_id  AND ucf.file_hash = file.file_hash
+    INNER JOIN tb_user_operate_file AS uof
+    ON  uof.user_id = userinfo.user_id AND uof.file_hash = file.file_hash
+  </select>
+
+  <select id="getFileInfo" resultType="com.hjy.vo.FileVo" parameterType="java.lang.Long">
+    SELECT DISTINCT userinfo.user_id,userinfo.username,file.file_name,file.file_hash,
+    ucf.gmt_create,download_count,like_count,collect_count,uof.status
+    from tb_user_info AS  userinfo
+    INNER  JOIN  tb_file_info AS  file
+    INNER  JOIN  tb_user_create_file AS  ucf
+    ON ucf.user_id = userinfo.user_id AND ucf.file_hash = file.file_hash
+    INNER JOIN tb_user_operate_file AS uof
+    ON  uof.user_id = userinfo.user_id AND uof.file_hash = file.file_hash
+    WHERE  ucf.user_id  LIKE  CONCAT('%',#{key},'%')
+  </select>
+
+
 </mapper>

@@ -15,15 +15,26 @@ public class UserMapperTest {
 
 
 
-
-	@Test
-	public void getList() throws Exception {
-		System.out.println(userMapper.getList());
-	}
-
 	@Autowired
 	private UserMapper userMapper;
 
+	@Autowired
+	private FileInfoMapper fileInfoMapper;
+
+	@Autowired
+	private FileOperationMapper fileOperationMapper;
+
+	@Test
+	public void getList() throws Exception {
+		System.out.println(fileInfoMapper.getFile());
+	}
+
+	@Test
+	public void testIntegral() {
+		Long userId = Long.parseLong("9512120");
+		userMapper.updateUserIntegral(userId);
+
+	}
 
 	@Test
 	public void deleteByPrimaryKey() throws Exception {

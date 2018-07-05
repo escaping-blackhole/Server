@@ -14,10 +14,11 @@ public interface FileInfoService {
 
 	ServerResponse deleteFileInfoById(Long userId, String fileHash);
 
-	ServerResponse updateFileInfo(FileInfo fileInfo, Long userId);
+	ServerResponse updateFileInfo(FileInfo fileInfo);
 
 	ServerResponse<PageInfo> getFileInfoList(int pageNum, int pageSize);
 
 	ServerResponse<PageInfo> getFileInfoListByUserId(int pageNum, int pageSize,Long userId);
 
+	ServerResponse updateFileCreation(String fileHash);
 }

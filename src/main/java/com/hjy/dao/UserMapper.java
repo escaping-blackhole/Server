@@ -18,6 +18,10 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
+    int updateUserIntegral(Long userId);
+
+    int updateUserIntegralSub(Long userId);
+
 	List<User> getList();
 
     User selectLogin(@Param("username") String username, @Param("password")String password);

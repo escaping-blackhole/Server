@@ -1,10 +1,13 @@
 package com.hjy.dao;
 
 import com.hjy.entity.FileInfo;
+import com.hjy.vo.FileVo;
 
 import java.util.Date;
+import java.util.List;
 
 public interface FileInfoMapper {
+
     int deleteByPrimaryKey(String fileHash);
 
     int insert(FileInfo record);
@@ -17,4 +20,8 @@ public interface FileInfoMapper {
 
     int updateByPrimaryKey(FileInfo record);
 
+    List<FileInfo> getList();
+
+    List<FileVo> getFile();
+    List<FileVo> getFileInfo(Long userId);
 }

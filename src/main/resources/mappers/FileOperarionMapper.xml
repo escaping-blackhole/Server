@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hjy.dao.FileOperationMapper" >
+  <resultMap id="BaseResultMap" type="com.hjy.entity.FileOperation" >
+    <constructor >
+      <idArg column="user_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="file_hash" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="gmt_create" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="status" jdbcType="TINYINT" javaType="java.lang.Byte"/>
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, file_hash, gmt_create,status
+  </sql>
+
+  <select id="getList" resultType="com.hjy.entity.FileOperation">
+    SELECT <include refid="Base_Column_List"/>
+    FROM  tb_user_operate_file
+  </select>
+
+  <select id="getListByFileHash" resultType="com.hjy.entity.FileOperation">
+    SELECT <include refid="Base_Column_List"/>
+    FROM  tb_user_operate_file WHERE  file_hash = #{fileHash,jdbcType=VARCHAR}
+  </select>
+
+
+  <insert id="insert" parameterType="java.util.List" >
+    insert into tb_user_operate_file (file_hash,user_id,gmt_create,status)
+    values
+     <foreach collection="list" item="fileOperation" index="index" separator="," close=";">
+     (
+        #{fileOperation.fileHash,jdbcType=VARCHAR},
+        #{fileOperation.userId,jdbcType=BIGINT},
+        #{fileOperation.gmtCreate,jdbcType=TIMESTAMP},
+        #{fileOperation.status,jdbcType=TINYINT}
+       )
+     </foreach>
+
+  </insert>
+
+</mapper>

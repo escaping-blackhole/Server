@@ -154,6 +154,21 @@
   </update>
 
 
+  <update id="updateUserIntegral">
+    UPDATE tb_user_info
+    SET  integral=integral+1
+    WHERE user_id = #{userId,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateUserIntegralSub">
+    UPDATE tb_user_info
+    SET  integral=integral-1
+    WHERE user_id = #{userId,jdbcType=BIGINT}
+  </update>
+
+
+
+
   <select id="selectLogin" resultType="com.hjy.entity.User">
         SELECT
         <include refid="Base_Column_List" />
